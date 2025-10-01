@@ -9,4 +9,5 @@ Route::get('/', function () {
 
 
 // ROUTE FOTOGRAFI
-Route::get('/home-fotografi' , [FotografiController::class, 'show']);
+Route::get('/
+' , [FotografiController::class, 'show']);
