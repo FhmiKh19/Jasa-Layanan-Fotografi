@@ -1,199 +1,137 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.app')
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>{{ $judul }}</title>
-  <!-- Bootstrap 5 CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <!-- FontAwesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-  <!-- AOS (Animate on Scroll) -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css"/>
-  <style>
-    body {
-      font-family: 'Poppins', sans-serif;
-      scroll-behavior: smooth;
-      background-color: #fdfdfd;
-      color: #222;
-    }
+@section('title', $judul ?? 'Dashboard Fotografer')
 
-    /* Navbar */
-    .navbar {
-      background-color: #111 !important;
-    }
+@push('styles')
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css"/>
+<style>
+  /* Hero Section */
+  .hero-section {
+    background: linear-gradient(135deg, rgba(62, 39, 35, 0.9), rgba(255, 213, 79, 0.8)), url('/images/hero-photo.jpg') center/cover no-repeat;
+    color: #fff;
+    padding: 100px 0;
+    text-align: center;
+    position: relative;
+    border-radius: 16px;
+    margin-bottom: 2rem;
+  }
 
-    .navbar-brand {
-      font-weight: 700;
-      color: #f1c40f !important;
-    }
+  .hero-section h1 {
+    font-size: 3rem;
+    font-weight: 900;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
+  }
 
-    .navbar-nav .nav-link {
-      color: #eee !important;
-      font-weight: 500;
-      transition: color 0.3s ease;
-    }
+  .hero-section p.lead {
+    font-size: 1.2rem;
+    margin-bottom: 40px;
+    font-weight: 400;
+  }
 
-    .navbar-nav .nav-link:hover,
-    .navbar-nav .nav-link.active {
-      color: #f1c40f !important;
-    }
+  /* Tombol Booking */
+  .btn-booking {
+    background: linear-gradient(135deg, #FFD54F, #FFA726);
+    color: #3E2723;
+    font-weight: 600;
+    padding: 14px 40px;
+    font-size: 1.1rem;
+    border-radius: 50px;
+    border: none;
+    box-shadow: 0 6px 15px rgba(255, 213, 79, 0.4);
+    transition: all 0.3s ease;
+  }
 
-    /* Hero Section */
-    .hero-section {
-      background: url('/images/hero-photo.jpg') center/cover no-repeat;
-      color: #fff;
-      padding: 160px 0 140px;
-      text-align: center;
-      position: relative;
-    }
+  .btn-booking:hover {
+    background: linear-gradient(135deg, #FFA726, #FFD54F);
+    transform: translateY(-4px) scale(1.05);
+    box-shadow: 0 10px 25px rgba(255, 213, 79, 0.6);
+    color: #3E2723;
+  }
 
-    .hero-section::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, rgba(0, 0, 0, 0.75), rgba(241, 196, 15, 0.55));
-      z-index: 0;
-    }
+  /* Services Section */
+  .service-card {
+    border-radius: 12px;
+    border: none;
+    transition: all 0.3s ease;
+    height: 100%;
+  }
 
-    .hero-section .container {
-      position: relative;
-      z-index: 1;
-    }
+  .service-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  }
 
-    .hero-section h1 {
-      font-size: 3.5rem;
-      font-weight: 900;
-      margin-bottom: 20px;
-      text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
-    }
+  .service-card i {
+    color: #FFD54F;
+  }
+</style>
+@endpush
 
-    .hero-section p.lead {
-      font-size: 1.2rem;
-      margin-bottom: 40px;
-      font-weight: 400;
-    }
+@section('content')
+<!-- Hero Section -->
+<section class="hero-section" data-aos="fade-up">
+  <div class="container">
+    <h1>Abadikan Momen Berharga Anda</h1>
+    <p class="lead">{{ $deskripsi ?? 'Website ini berisi informasi tentang layanan fotografi, galeri, dan portofolio.' }}</p>
+    <a href="#" class="btn btn-booking">
+      <i class="fas fa-calendar-check me-2"></i>Booking Sekarang
+    </a>
+  </div>
+</section>
 
-    /* Tombol Booking */
-    .btn-booking {
-      background: linear-gradient(135deg, #f1c40f, #ff9800);
-      color: #111;
-      font-weight: 600;
-      padding: 14px 40px;
-      font-size: 1.1rem;
-      border-radius: 50px;
-      border: none;
-      box-shadow: 0 6px 15px rgba(241, 196, 15, 0.4);
-      transition: all 0.3s ease;
-    }
-
-    .btn-booking:hover {
-      background: linear-gradient(135deg, #ffb347, #ffcc33);
-      transform: translateY(-4px) scale(1.05);
-      box-shadow: 0 10px 25px rgba(241, 196, 15, 0.6);
-    }
-
-    /* Services Section */
-    .card {
-      border-radius: 12px;
-      border: none;
-    }
-
-    /* Footer */
-    .footer {
-      background-color: #111;
-      color: #ddd;
-      padding: 30px 0;
-      text-align: center;
-      font-size: 0.95rem;
-    }
-
-    .footer p {
-      margin: 0;
-    }
-
-    .social-icons a {
-      color: #f1c40f;
-      margin: 0 10px;
-      font-size: 1.4rem;
-      transition: transform 0.3s ease, color 0.3s ease;
-    }
-
-    .social-icons a:hover {
-      color: #fff;
-      transform: scale(1.2);
-    }
-  </style>
-</head>
-
-<body>
-  <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg shadow-sm">
-    <div class="container">
-      <a class="navbar-brand" href="#">FotoFreelance</a>
-      <button class="navbar-toggler text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item"><a class="nav-link active" href="#">Home</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">Layanan</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">Portofolio</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">Kontak</a></li>
-        </ul>
-      </div>
+<!-- Services Section -->
+<section class="mb-4">
+  <div class="card border-0 shadow-sm">
+    <div class="card-header bg-white">
+      <h5 class="fw-bold mb-0">
+        <i class="fas fa-list me-2"></i>Layanan Kami
+      </h5>
     </div>
-  </nav>
-
-  <!-- Hero Section -->
-  <section class="hero-section">
-    <div class="container" data-aos="fade-up">
-      <h1>Abadikan Momen Berharga Anda</h1>
-      <p class="lead">{{ $deskripsi }}</p>
-      <a href="#" class="btn btn-booking">Booking Sekarang</a>
-    </div>
-  </section>
-
-  <!-- Services Section -->
-  <section class="py-5 text-center">
-    <div class="container">
-      <h2 class="mb-4">Layanan Kami</h2>
-      <div class="row justify-content-center">
-        @foreach($layanan as $item)
-          <div class="col-md-3 mb-3">
-            <div class="card shadow-sm p-3">
-              <i class="fa fa-camera fa-2x mb-2 text-warning"></i>
-              <h5>{{ $item }}</h5>
+    <div class="card-body">
+      <div class="row g-3">
+        @foreach($layanan ?? [] as $item)
+          <div class="col-md-3 col-sm-6">
+            <div class="card service-card shadow-sm p-4 text-center">
+              <i class="fas fa-camera fa-3x mb-3"></i>
+              <h5 class="fw-bold">{{ $item }}</h5>
             </div>
           </div>
         @endforeach
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="container" data-aos="fade-up">
-      <p>&copy; {{ date('Y') }} Jasa Layanan Fotografi Freelance. All Rights Reserved.</p>
-      <div class="social-icons mt-2">
-        <a href="#"><i class="fab fa-facebook-f"></i></a>
-        <a href="#"><i class="fab fa-instagram"></i></a>
-        <a href="#"><i class="fab fa-twitter"></i></a>
-        <a href="#"><i class="fab fa-linkedin-in"></i></a>
-      </div>
+<!-- Quick Stats -->
+<div class="row g-3 mb-4">
+  <div class="col-md-4">
+    <div class="card card-stat p-3 text-center">
+      <h6 class="text-muted">Total Pesanan</h6>
+      <h3 class="fw-bold text-warning">12</h3>
     </div>
-  </footer>
+  </div>
+  <div class="col-md-4">
+    <div class="card card-stat p-3 text-center">
+      <h6 class="text-muted">Pesanan Aktif</h6>
+      <h3 class="fw-bold text-primary">5</h3>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card card-stat p-3 text-center">
+      <h6 class="text-muted">Rating</h6>
+      <h3 class="fw-bold text-success">4.8 <i class="fas fa-star"></i></h3>
+    </div>
+  </div>
+</div>
+@endsection
 
-  {{--Java Script --}}
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-  <script>
-    AOS.init({
-      duration: 1200,
-      once: true
-    });
-  </script>
-</body>
-</html>
+@push('scripts')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+<script>
+  AOS.init({
+    duration: 1200,
+    once: true
+  });
+</script>
+@endpush
