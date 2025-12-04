@@ -1,0 +1,111 @@
+===============================================
+PANDUAN CEPAT: LIHAT DATABASE DI HEIDISQL
+===============================================
+
+Dari screenshot Anda, ikuti langkah berikut:
+
+===============================================
+LANGKAH 1: PILIH DATABASE "laravel"
+===============================================
+
+1. Lihat panel KIRI (Database Navigation)
+2. Scroll ke bawah, cari database bernama "laravel"
+3. Klik SEKALI pada database "laravel"
+   → Database akan terpilih dan ditampilkan di panel tengah
+
+===============================================
+LANGKAH 2: LIHAT TABEL
+===============================================
+
+Setelah klik database "laravel", di panel TENGAH akan muncul daftar tabel:
+
+Tabel yang ada:
+- users          (tabel data user/pengguna)
+- bookings       (tabel data booking/pesanan)
+- sessions       (tabel session login)
+- password_reset_tokens
+- migrations
+
+===============================================
+LANGKAH 3: LIHAT DATA USER
+===============================================
+
+CARA 1 - Double Click:
+1. Double click pada tabel "users"
+2. Data akan muncul di tab baru
+
+CARA 2 - Klik Kanan:
+1. Klik kanan pada tabel "users"
+2. Pilih "Select top 1000 rows"
+3. Data akan muncul di panel tengah
+
+Data yang akan terlihat:
+- id          = ID user
+- name        = Nama lengkap
+- telepon     = Nomor telepon (UNIQUE - tidak bisa sama)
+- alamat      = Alamat
+- email       = Email (biasanya telepon@noemail.local)
+- password    = Password (dalam bentuk hash/enkripsi)
+- created_at  = Tanggal dibuat
+- updated_at  = Tanggal diupdate
+
+===============================================
+LANGKAH 4: LIHAT DATA BOOKING
+===============================================
+
+1. Double click pada tabel "bookings"
+2. Atau klik kanan > "Select top 1000 rows"
+
+Data yang akan terlihat:
+- id            = ID booking
+- nama_pemesan  = Nama yang memesan
+- jam_booking   = Jam booking
+- bukti_transfer = File bukti transfer
+- created_at    = Tanggal dibuat
+- updated_at    = Tanggal diupdate
+
+===============================================
+MENGGUNAKAN SQL QUERY (PANEL BAWAH):
+===============================================
+
+Di panel BAWAH ada SQL Editor, ketik query berikut:
+
+LIHAT SEMUA USER:
+   SELECT * FROM users;
+
+LIHAT USER BERDASARKAN NAMA:
+   SELECT * FROM users WHERE name = 'gayus';
+
+LIHAT USER BERDASARKAN TELEPON:
+   SELECT * FROM users WHERE telepon = '0895806078011';
+
+LIHAT SEMUA BOOKING:
+   SELECT * FROM bookings;
+
+HITUNG JUMLAH USER:
+   SELECT COUNT(*) as total FROM users;
+
+SETELAH KETIK QUERY:
+1. Tekan F9 (atau klik tombol Execute/▶ di toolbar)
+2. Hasil akan muncul di panel tengah
+
+===============================================
+SHORTCUT PENTING:
+===============================================
+
+F5    = Refresh (update data terbaru)
+F9    = Execute query (jalankan SQL)
+Ctrl+F = Cari data
+
+===============================================
+INFO DATABASE:
+===============================================
+
+Database: laravel
+Host: 127.0.0.1
+Port: 3306
+User: root
+Password: (kosong)
+
+===============================================
+

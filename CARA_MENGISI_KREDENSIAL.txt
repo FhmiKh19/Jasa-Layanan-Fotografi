@@ -1,0 +1,84 @@
+═══════════════════════════════════════════════════════════════
+  CARA MENGISI KREDENSIAL GOOGLE OAUTH DI FILE .ENV
+═══════════════════════════════════════════════════════════════
+
+LANGKAH 1: BUKA FILE .ENV
+───────────────────────────────────────────────────────────────
+1. Buka folder: C:\laragon-6.0-minimal\www\Jasa-Layanan-Fotografi_uas\Jasa-Layanan-Fotografi
+2. Cari file bernama: .env
+3. Buka file tersebut dengan Notepad atau text editor lainnya
+
+LANGKAH 2: CARI BARIS GOOGLE OAUTH
+───────────────────────────────────────────────────────────────
+Scroll ke bagian bawah file, cari baris seperti ini:
+
+   # Google OAuth Configuration
+   GOOGLE_CLIENT_ID=
+   GOOGLE_CLIENT_SECRET=
+   GOOGLE_REDIRECT_URL=http://127.0.0.1:8000/google/callback
+
+LANGKAH 3: ISI DENGAN KREDENSIAL ANDA
+───────────────────────────────────────────────────────────────
+Ganti baris kosong menjadi seperti ini (CONTOH):
+
+   # Google OAuth Configuration
+   GOOGLE_CLIENT_ID=123456789-abcdefghijklmnop.apps.googleusercontent.com
+   GOOGLE_CLIENT_SECRET=GOCSPX-abcdefghijklmnopqrstuvwxyz
+   GOOGLE_REDIRECT_URL=http://127.0.0.1:8000/google/callback
+
+⚠️ PENTING:
+   - GANTI dengan kredensial ANDA yang sebenarnya dari Google Cloud Console
+   - TIDAK ada spasi sebelum/sesudah tanda =
+   - TIDAK perlu tanda kutip
+   - Setelah tanda = langsung tulis kredensial
+
+CONTOH YANG BENAR:
+   ✅ GOOGLE_CLIENT_ID=123456789-abc.apps.googleusercontent.com
+   ✅ GOOGLE_CLIENT_SECRET=GOCSPX-abc123
+
+CONTOH YANG SALAH:
+   ❌ GOOGLE_CLIENT_ID = 123456789...  (ada spasi)
+   ❌ GOOGLE_CLIENT_ID="123456789..."  (ada tanda kutip)
+   ❌ GOOGLE_CLIENT_ID=                (masih kosong)
+
+LANGKAH 4: SIMPAN FILE
+───────────────────────────────────────────────────────────────
+Tekan Ctrl + S untuk menyimpan file
+
+LANGKAH 5: CLEAR CACHE
+───────────────────────────────────────────────────────────────
+Buka terminal/command prompt, lalu jalankan:
+
+   cd C:\laragon-6.0-minimal\www\Jasa-Layanan-Fotografi_uas\Jasa-Layanan-Fotografi
+   php artisan config:clear
+
+LANGKAH 6: TEST
+───────────────────────────────────────────────────────────────
+1. Buka browser: http://127.0.0.1:8000
+2. Klik tombol "Login dengan Google"
+3. Pilih akun dengan domain @pcr.ac.id
+4. Langsung masuk ke halaman web!
+
+═══════════════════════════════════════════════════════════════
+  JIKA BELUM PUNYA KREDENSIAL
+═══════════════════════════════════════════════════════════════
+
+1. Buka: https://console.cloud.google.com/
+2. Login dengan akun Google
+3. Buat/pilih project
+4. Buka: APIs & Services > OAuth consent screen
+   - Pilih: Internal
+   - Isi informasi yang diperlukan
+   - Save
+5. Buka: APIs & Services > Credentials
+6. Klik: Create Credentials > OAuth Client ID
+7. Pilih: Web Application
+8. Isi:
+   - Name: Jasa Fotografi
+   - Authorized redirect URIs: http://127.0.0.1:8000/google/callback
+9. Klik: Create
+10. SALIN Client ID dan Client Secret
+11. PASTE ke file .env (ikuti Langkah 3 di atas)
+
+═══════════════════════════════════════════════════════════════
+

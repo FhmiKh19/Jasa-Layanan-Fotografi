@@ -11,22 +11,27 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // TABEL USERS (SUDAH DIGABUNG)
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('email')->unique();
+            $table->string('telepon')->unique();   // dipakai untuk login
+            $table->string('alamat');              // data tambahan
+            $table->string('email')->nullable();   // email opsional
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
+            $table->string('password');            // password untuk auth laravel
             $table->rememberToken();
             $table->timestamps();
         });
 
+        // PASSWORD RESET TOKENS
         Schema::create('password_reset_tokens', function (Blueprint $table) {
             $table->string('email')->primary();
             $table->string('token');
             $table->timestamp('created_at')->nullable();
         });
 
+        // TABEL SESSIONS (DEFAULT LARAVEL)
         Schema::create('sessions', function (Blueprint $table) {
             $table->string('id')->primary();
             $table->foreignId('user_id')->nullable()->index();

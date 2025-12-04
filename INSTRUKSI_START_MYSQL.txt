@@ -1,0 +1,72 @@
+===============================================
+INSTRUKSI UNTUK MEMULAI MYSQL DI LARAGON
+===============================================
+
+Setelah laptop mati, MySQL di Laragon perlu di-start manual.
+
+LANGKAH CEPAT (5 DETIK):
+
+1. Buka Laragon
+   - Klik ikon Laragon di desktop, atau
+   - Klik kanan ikon Laragon di system tray (taskbar)
+
+2. Start MySQL
+   CARA A (Paling Cepat):
+   - Klik kanan ikon Laragon di system tray
+   - Pilih "Start All"
+   - Tunggu hingga status MySQL berubah jadi hijau
+
+   CARA B (Alternatif):
+   - Buka aplikasi Laragon
+   - Klik tombol "Start" pada bagian MySQL
+   - Atau klik "Start All" di bagian atas
+
+3. Verifikasi
+   - Pastikan status MySQL menunjukkan "Running" (hijau)
+   - Ikon MySQL di Laragon berwarna hijau
+
+4. Test Aplikasi
+   - Refresh browser Anda
+   - Coba login dengan Google atau nomor telepon
+
+===============================================
+JIKA MASIH ERROR:
+===============================================
+
+1. Cek apakah MySQL benar-benar berjalan:
+   - Buka Laragon
+   - Lihat status MySQL (harus hijau/Running)
+
+2. Test koneksi database:
+   Jalankan di terminal:
+   php test-db-connection.php
+
+3. Pastikan database sudah ada:
+   - Buka phpMyAdmin: http://127.0.0.1/phpmyadmin
+   - Lihat apakah database "laravel" sudah ada
+   - Jika belum, buat database baru
+
+4. Clear cache lagi:
+   php artisan config:clear
+   php artisan cache:clear
+
+===============================================
+CATATAN PENTING:
+===============================================
+
+✅ Session driver sudah dikembalikan ke 'database'
+✅ Konfigurasi database sudah benar:
+   - DB_CONNECTION=mysql
+   - DB_HOST=127.0.0.1
+   - DB_PORT=3306
+   - DB_DATABASE=laravel
+   - DB_USERNAME=root
+   - DB_PASSWORD= (kosong)
+
+⚠️  Yang perlu Anda lakukan:
+   HANYA START MYSQL DI LARAGON!
+
+Setelah MySQL berjalan, aplikasi akan berfungsi normal lagi seperti sebelumnya.
+
+===============================================
+

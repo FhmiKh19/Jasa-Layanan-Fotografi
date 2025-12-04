@@ -15,8 +15,8 @@
     body {
       font-family: 'Poppins', sans-serif;
       scroll-behavior: smooth;
-      background-color: #fdfdfd;
-      color: #222;
+      background-color: #fffaf5;
+      color: #3b2a21;
     }
 
     /* Navbar */
@@ -42,9 +42,9 @@
 
     /* Hero Section */
     .hero-section {
-      background: url('/images/hero-photo.jpg') center/cover no-repeat;
+      background: url('https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
       color: #fff;
-      padding: 160px 0 140px;
+      padding: 170px 0 150px;
       text-align: center;
       position: relative;
     }
@@ -53,7 +53,7 @@
       content: "";
       position: absolute;
       inset: 0;
-      background: linear-gradient(135deg, rgba(0, 0, 0, 0.75), rgba(241, 196, 15, 0.55));
+      background: linear-gradient(135deg, rgba(33, 17, 11, 0.95), rgba(121, 85, 72, 0.65));
       z-index: 0;
     }
 
@@ -77,8 +77,8 @@
 
     /* Tombol Booking */
     .btn-booking {
-      background: linear-gradient(135deg, #f1c40f, #ff9800);
-      color: #111;
+      background: linear-gradient(135deg, #6d4c41, #d7b39a);
+      color: #2a1b12;
       font-weight: 600;
       padding: 14px 40px;
       font-size: 1.1rem;
@@ -95,9 +95,42 @@
     }
 
     /* Services Section */
-    .card {
-      border-radius: 12px;
+    .services-section {
+      padding: 80px 0;
+      background: linear-gradient(135deg, #fbeee6 0%, #f3d6c1 100%);
+    }
+
+    .service-card {
+      border-radius: 15px;
       border: none;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      height: 100%;
+      padding: 30px 20px;
+      background: white;
+    }
+
+    .service-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    }
+
+    .service-icon {
+      font-size: 3rem;
+      color: #2980b9;
+      margin-bottom: 20px;
+    }
+
+    .service-title {
+      color: #2c3e50;
+      font-weight: 700;
+      margin-bottom: 15px;
+      font-size: 1.5rem;
+    }
+
+    .service-description {
+      color: #7f8c8d;
+      line-height: 1.6;
+      font-size: 0.95rem;
     }
 
     /* Footer */
@@ -129,19 +162,27 @@
 
 <body>
   <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg shadow-sm">
+  <nav class="navbar navbar-expand-lg navbar-dark" style="background: linear-gradient(120deg, #1f1c2c, #928dab); box-shadow: 0 8px 30px rgba(0,0,0,0.2);">
     <div class="container">
-      <a class="navbar-brand" href="#">FotoFreelance</a>
-      <button class="navbar-toggler text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      <a class="navbar-brand fw-bold" href="{{ route('login.form') }}">FotoFreelance</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item"><a class="nav-link active" href="#">Home</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">Layanan</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">Portofolio</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">Kontak</a></li>
+        <ul class="navbar-nav ms-auto align-items-lg-center">
+          <li class="nav-item me-lg-3">
+            <a class="nav-link text-white fw-semibold" href="{{ route('login.form') }}"><i class="fas fa-home me-1"></i>Home</a>
+          </li>
+          <li class="nav-item me-lg-3">
+            <a class="nav-link text-white fw-semibold" href="{{ route('booking.create') }}"><i class="fas fa-calendar-plus me-1"></i>Booking</a>
+          </li>
+          <li class="nav-item">
+            <form action="{{ route('logout') }}" method="POST" class="d-inline">
+              @csrf
+              <button type="submit" class="btn btn-sm btn-light fw-semibold"><i class="fas fa-sign-out-alt me-1"></i>Logout</button>
+            </form>
+          </li>
         </ul>
       </div>
     </div>
@@ -152,20 +193,25 @@
     <div class="container" data-aos="fade-up">
       <h1>Abadikan Momen Berharga Anda</h1>
       <p class="lead">{{ $deskripsi }}</p>
-      <a href="#" class="btn btn-booking">Booking Sekarang</a>
+      <a href="{{ route('booking.create') }}" class="btn btn-booking">Booking Sekarang</a>
     </div>
   </section>
 
   <!-- Services Section -->
-  <section class="py-5 text-center">
+  <section class="services-section">
     <div class="container">
-      <h2 class="mb-4">Layanan Kami</h2>
-      <div class="row justify-content-center">
+      <div class="text-center mb-5">
+        <h2 class="display-4 fw-bold mb-3" style="color: #2c3e50;">Jenis Layanan Fotografi</h2>
+        <p class="lead text-muted">Kami menyediakan berbagai layanan fotografi profesional untuk kebutuhan Anda</p>
+      </div>
+      
+      <div class="row g-4">
         @foreach($layanan as $item)
-          <div class="col-md-3 mb-3">
-            <div class="card shadow-sm p-3">
-              <i class="fa fa-camera fa-2x mb-2 text-warning"></i>
-              <h5>{{ $item }}</h5>
+          <div class="col-md-6 col-lg-3 mb-4">
+            <div class="service-card shadow text-center">
+              <i class="fa {{ $item['icon'] }} service-icon"></i>
+              <h4 class="service-title text-uppercase">{{ $item['nama'] }}</h4>
+              <p class="service-description">{{ $item['deskripsi'] }}</p>
             </div>
           </div>
         @endforeach

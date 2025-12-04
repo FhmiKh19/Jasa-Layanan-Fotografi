@@ -1,0 +1,63 @@
+═══════════════════════════════════════════════════════════════
+  URI YANG BENAR UNTUK GOOGLE OAUTH
+═══════════════════════════════════════════════════════════════
+
+⚠️ PENTING: URI HARUS LENGKAP DENGAN PATH!
+
+URI YANG BENAR (COPY-PASTE INI):
+───────────────────────────────────────────────────────────────
+http://127.0.0.1:8000/google/callback
+
+URI YANG SALAH (JANGAN PAKAI INI):
+───────────────────────────────────────────────────────────────
+❌ http://127.0.0.1:8000
+❌ http://127.0.0.1:8000/
+❌ http://localhost:8000/google/callback
+❌ https://127.0.0.1:8000/google/callback
+
+═══════════════════════════════════════════════════════════════
+  CARA MENAMBAHKAN DI GOOGLE CLOUD CONSOLE:
+═══════════════════════════════════════════════════════════════
+
+1. Buka: APIs & Services > Credentials
+
+2. Klik nama OAuth Client yang sudah dibuat
+
+3. Klik ikon "Edit" (pensil)
+
+4. Scroll ke bagian "Authorized redirect URIs"
+
+5. Klik "ADD URI" atau "+ ADD URI"
+
+6. COPY-PASTE URI ini (persis seperti ini):
+   http://127.0.0.1:8000/google/callback
+
+7. Pastikan:
+   ✅ Menggunakan http:// (bukan https://)
+   ✅ Menggunakan 127.0.0.1 (bukan localhost)
+   ✅ Port 8000
+   ✅ Path /google/callback (WAJIB ada!)
+   ✅ Tidak ada spasi
+   ✅ Tidak ada karakter tersembunyi
+
+8. Klik "SAVE"
+
+9. Tunggu 1-2 menit
+
+10. Coba login lagi
+
+═══════════════════════════════════════════════════════════════
+  KENAPA PATH /google/callback WAJIB ADA?
+═══════════════════════════════════════════════════════════════
+
+Karena aplikasi menggunakan route:
+   Route::get('/google/callback', ...)
+
+Jadi Google akan redirect ke:
+   http://127.0.0.1:8000/google/callback
+
+BUKAN ke:
+   http://127.0.0.1:8000
+
+═══════════════════════════════════════════════════════════════
+

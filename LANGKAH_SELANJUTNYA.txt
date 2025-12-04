@@ -1,0 +1,88 @@
+═══════════════════════════════════════════════════════════════
+  LANGKAH SELANJUTNYA: MENGISI KREDENSIAL KE FILE .ENV
+═══════════════════════════════════════════════════════════════
+
+Anda sudah mendapatkan Client ID dan Client Secret dari Google Cloud Console.
+Sekarang ikuti langkah berikut:
+
+LANGKAH 1: BUKA FILE .ENV
+───────────────────────────────────────────────────────────────
+1. Buka folder:
+   C:\laragon-6.0-minimal\www\Jasa-Layanan-Fotografi_uas\Jasa-Layanan-Fotografi
+
+2. Cari file bernama: .env
+   (File ini mungkin tersembunyi, pastikan "Show hidden files" aktif)
+
+3. Buka file .env dengan Notepad atau text editor lainnya
+
+ATAU jalankan script helper:
+   cd C:\laragon-6.0-minimal\www\Jasa-Layanan-Fotografi_uas\Jasa-Layanan-Fotografi
+   php isi-kredensial.php
+
+LANGKAH 2: CARI BARIS GOOGLE OAUTH
+───────────────────────────────────────────────────────────────
+Scroll ke bagian bawah file, cari baris seperti ini:
+
+   # Google OAuth Configuration
+   GOOGLE_CLIENT_ID=
+   GOOGLE_CLIENT_SECRET=
+   GOOGLE_REDIRECT_URL=http://127.0.0.1:8000/google/callback
+
+LANGKAH 3: ISI DENGAN KREDENSIAL ANDA
+───────────────────────────────────────────────────────────────
+Ganti baris kosong menjadi seperti ini:
+
+   # Google OAuth Configuration
+   GOOGLE_CLIENT_ID=PASTE_CLIENT_ID_DISINI
+   GOOGLE_CLIENT_SECRET=PASTE_CLIENT_SECRET_DISINI
+   GOOGLE_REDIRECT_URL=http://127.0.0.1:8000/google/callback
+
+CONTOH:
+   GOOGLE_CLIENT_ID=123456789-abcdefghijklmnop.apps.googleusercontent.com
+   GOOGLE_CLIENT_SECRET=GOCSPX-abcdefghijklmnopqrstuvwxyz
+
+⚠️ PENTING:
+   - PASTE langsung Client ID yang sudah disalin dari Google Cloud Console
+   - PASTE langsung Client Secret yang sudah disalin dari Google Cloud Console
+   - TIDAK ada spasi sebelum/sesudah tanda =
+   - TIDAK perlu tanda kutip
+   - Setelah tanda = langsung tulis kredensial
+
+LANGKAH 4: SIMPAN FILE
+───────────────────────────────────────────────────────────────
+Tekan Ctrl + S untuk menyimpan file
+
+LANGKAH 5: CLEAR CACHE
+───────────────────────────────────────────────────────────────
+Buka terminal/command prompt, jalankan:
+
+   cd C:\laragon-6.0-minimal\www\Jasa-Layanan-Fotografi_uas\Jasa-Layanan-Fotografi
+   php artisan config:clear
+
+LANGKAH 6: VERIFIKASI
+───────────────────────────────────────────────────────────────
+Jalankan script untuk mengecek:
+
+   php check-google-config.php
+
+Jika muncul "✅ KONFIGURASI SUDAH LENGKAP!", berarti sudah benar.
+
+LANGKAH 7: TEST LOGIN
+───────────────────────────────────────────────────────────────
+1. Buka browser: http://127.0.0.1:8000
+2. Klik tombol "Login dengan Google" (tombol putih di pojok kanan atas)
+3. Pilih akun dengan domain @pcr.ac.id
+4. Klik "Allow"
+5. Langsung masuk ke halaman web aplikasi!
+
+═══════════════════════════════════════════════════════════════
+  TIPS
+═══════════════════════════════════════════════════════════════
+
+✅ Pastikan tidak ada spasi sebelum/sesudah tanda =
+✅ Pastikan tidak ada karakter tersembunyi
+✅ Setelah mengisi, WAJIB jalankan: php artisan config:clear
+✅ Jika masih error, cek lagi apakah kredensial sudah benar
+
+═══════════════════════════════════════════════════════════════
+

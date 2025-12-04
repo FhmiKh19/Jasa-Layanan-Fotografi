@@ -1,0 +1,90 @@
+═══════════════════════════════════════════════════════════════
+  PANDUAN SETUP GOOGLE OAUTH UNTUK PROJECT "My Project 19557"
+═══════════════════════════════════════════════════════════════
+
+LANGKAH 1: SETUP OAUTH CONSENT SCREEN
+───────────────────────────────────────────────────────────────
+1. Di Google Cloud Console, pastikan project "My Project 19557" sudah dipilih
+2. Klik menu "APIs & Services" (di sidebar kiri)
+3. Klik "OAuth consent screen"
+4. Pilih "Internal" (karena menggunakan domain pcr.ac.id)
+5. Klik "CREATE"
+6. Isi informasi:
+   - App name: Jasa Layanan Fotografi
+   - User support email: pilih email Anda
+   - Developer contact information: masukkan email Anda
+7. Klik "SAVE AND CONTINUE"
+8. Di halaman "Scopes", klik "SAVE AND CONTINUE"
+9. Di halaman "Test users", klik "SAVE AND CONTINUE"
+10. Di halaman "Summary", klik "BACK TO DASHBOARD"
+
+LANGKAH 2: BUAT OAUTH CLIENT ID
+───────────────────────────────────────────────────────────────
+1. Masih di menu "APIs & Services"
+2. Klik "Credentials" (di sidebar kiri)
+3. Klik tombol "CREATE CREDENTIALS" (di bagian atas)
+4. Pilih "OAuth client ID"
+5. Jika muncul popup "Configure consent screen", klik "CONFIGURE CONSENT SCREEN"
+   (jika sudah dikonfigurasi, lanjut ke langkah 6)
+6. Di form "Create OAuth client ID":
+   - Application type: Pilih "Web application"
+   - Name: Isi "Jasa Fotografi Web Client"
+   - Authorized redirect URIs: 
+     Klik "ADD URI" dan masukkan:
+     http://127.0.0.1:8000/google/callback
+7. Klik "CREATE"
+8. Akan muncul popup dengan:
+   - Your Client ID: (SALIN INI!)
+   - Your Client Secret: (SALIN INI!)
+9. SALIN kedua kredensial tersebut
+
+LANGKAH 3: ISI FILE .ENV
+───────────────────────────────────────────────────────────────
+1. Buka file .env di folder:
+   C:\laragon-6.0-minimal\www\Jasa-Layanan-Fotografi_uas\Jasa-Layanan-Fotografi\.env
+
+2. Cari baris (sekitar akhir file):
+   GOOGLE_CLIENT_ID=
+   GOOGLE_CLIENT_SECRET=
+
+3. Isi dengan kredensial yang sudah disalin:
+   GOOGLE_CLIENT_ID=PASTE_CLIENT_ID_DISINI
+   GOOGLE_CLIENT_SECRET=PASTE_CLIENT_SECRET_DISINI
+
+   Contoh:
+   GOOGLE_CLIENT_ID=123456789-abcdefghijklmnop.apps.googleusercontent.com
+   GOOGLE_CLIENT_SECRET=GOCSPX-abcdefghijklmnopqrstuvwxyz
+
+4. Simpan file (Ctrl + S)
+
+LANGKAH 4: CLEAR CACHE
+───────────────────────────────────────────────────────────────
+Buka terminal/command prompt, jalankan:
+
+   cd C:\laragon-6.0-minimal\www\Jasa-Layanan-Fotografi_uas\Jasa-Layanan-Fotografi
+   php artisan config:clear
+
+LANGKAH 5: TEST LOGIN
+───────────────────────────────────────────────────────────────
+1. Buka browser: http://127.0.0.1:8000
+2. Klik tombol "Login dengan Google" (tombol putih di pojok kanan atas)
+3. Akan muncul halaman Google untuk memilih akun
+4. Pilih akun dengan domain @pcr.ac.id
+5. Klik "Allow" untuk memberikan izin
+6. Otomatis masuk ke halaman web aplikasi!
+
+═══════════════════════════════════════════════════════════════
+  CATATAN PENTING
+═══════════════════════════════════════════════════════════════
+
+✅ Pastikan Authorized redirect URI sudah benar:
+   http://127.0.0.1:8000/google/callback
+
+✅ Pastikan tidak ada spasi sebelum/sesudah tanda = di file .env
+
+✅ Setelah mengisi kredensial, WAJIB jalankan: php artisan config:clear
+
+✅ Login hanya untuk akun dengan domain @pcr.ac.id
+
+═══════════════════════════════════════════════════════════════
+

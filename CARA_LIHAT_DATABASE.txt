@@ -1,0 +1,211 @@
+===============================================
+CARA MELIHAT DATABASE DI LARAGON
+===============================================
+
+Ada 2 cara untuk melihat database:
+
+===============================================
+CARA 1: MENGGUNAKAN PHPMYADMIN (TERMUDAH)
+===============================================
+
+LANGKAH 1: BUKA PHPMYADMIN
+   Ada 3 cara untuk membuka phpMyAdmin:
+
+   CARA A (Paling Cepat):
+   1. Klik kanan ikon Laragon di system tray (taskbar)
+   2. Pilih "www" > "phpMyAdmin"
+   
+   CARA B:
+   1. Buka browser (Chrome, Firefox, dll)
+   2. Ketik di address bar: http://127.0.0.1/phpmyadmin
+   3. Tekan Enter
+
+   CARA C:
+   1. Buka Laragon
+   2. Klik menu "Database" > "Open phpMyAdmin"
+
+LANGKAH 2: LOGIN KE PHPMYADMIN
+   - Username: root
+   - Password: (kosongkan, biarkan kosong)
+   - Klik "Go" atau tekan Enter
+
+LANGKAH 3: PILIH DATABASE
+   - Di sidebar kiri, klik nama database "laravel"
+   - Anda akan melihat semua tabel dalam database
+
+LANGKAH 4: LIHAT DATA TABEL
+   - Klik nama tabel (misalnya "users") di sidebar kiri
+   - Atau klik "Browse" pada tabel yang ingin dilihat
+   - Data akan muncul dalam bentuk tabel
+
+===============================================
+CARA 2: MENGGUNAKAN TERMINAL/COMMAND LINE
+===============================================
+
+LANGKAH 1: BUKA TERMINAL
+   - Buka PowerShell atau Command Prompt
+   - Atau gunakan terminal di Cursor/VS Code
+
+LANGKAH 2: AKSES MYSQL
+   Jalankan perintah:
+   
+   mysql -u root -p
+   
+   Tekan Enter, lalu Enter lagi (password kosong)
+
+LANGKAH 3: PILIH DATABASE
+   Ketik:
+   
+   USE laravel;
+   
+   Tekan Enter
+
+LANGKAH 4: LIHAT TABEL
+   Untuk melihat semua tabel:
+   
+   SHOW TABLES;
+   
+   Untuk melihat data di tabel users:
+   
+   SELECT * FROM users;
+   
+   Untuk keluar, ketik:
+   
+   EXIT;
+
+===============================================
+CARA 3: MENGGUNAKAN LARAVEL TINKER
+===============================================
+
+LANGKAH 1: BUKA TERMINAL
+   Buka terminal di folder project:
+   cd Jasa-Layanan-Fotografi
+
+LANGKAH 2: JALANKAN TINKER
+   php artisan tinker
+
+LANGKAH 3: LIHAT DATA
+   Untuk melihat semua user:
+   
+   User::all();
+   
+   Untuk melihat user dengan ID tertentu:
+   
+   User::find(1);
+   
+   Untuk melihat jumlah user:
+   
+   User::count();
+   
+   Untuk keluar, ketik:
+   
+   exit
+
+===============================================
+TABEL-TABEL YANG ADA DI DATABASE
+===============================================
+
+Berdasarkan migration, database "laravel" memiliki tabel:
+
+1. users
+   - id
+   - name (nama)
+   - telepon (nomor telepon - UNIQUE)
+   - alamat
+   - email
+   - password
+   - created_at
+   - updated_at
+
+2. bookings
+   - id
+   - nama_pemesan
+   - jam_booking
+   - bukti_transfer
+   - created_at
+   - updated_at
+
+3. sessions
+   - id
+   - user_id
+   - ip_address
+   - user_agent
+   - payload
+   - last_activity
+
+4. password_reset_tokens
+   - email
+   - token
+   - created_at
+
+5. migrations
+   - Menyimpan riwayat migration yang sudah dijalankan
+
+===============================================
+CARA LIHAT DATA USER YANG TERDAFTAR
+===============================================
+
+DI PHPMYADMIN:
+1. Buka phpMyAdmin
+2. Pilih database "laravel"
+3. Klik tabel "users"
+4. Klik "Browse" atau langsung klik nama tabel
+5. Data semua user akan muncul
+
+DI TERMINAL (MySQL):
+   mysql -u root
+   USE laravel;
+   SELECT * FROM users;
+
+DI TINKER:
+   php artisan tinker
+   User::all();
+
+===============================================
+CARA LIHAT DATA BOOKING
+===============================================
+
+DI PHPMYADMIN:
+1. Buka phpMyAdmin
+2. Pilih database "laravel"
+3. Klik tabel "bookings"
+4. Klik "Browse"
+
+DI TINKER:
+   php artisan tinker
+   \App\Models\Booking::all();
+
+===============================================
+CATATAN PENTING
+===============================================
+
+⚠️  Password user di database di-hash (terenkripsi)
+   Jadi tidak bisa melihat password asli, hanya hash-nya saja.
+
+⚠️  Nomor telepon adalah UNIQUE
+   Tidak boleh ada 2 user dengan nomor telepon yang sama.
+
+⚠️  Pastikan MySQL berjalan
+   Jika phpMyAdmin tidak bisa dibuka, pastikan MySQL sudah start di Laragon.
+
+===============================================
+TROUBLESHOOTING
+===============================================
+
+1. phpMyAdmin tidak bisa dibuka:
+   - Pastikan MySQL sudah start di Laragon
+   - Cek apakah port 3306 tidak digunakan aplikasi lain
+   - Restart Laragon
+
+2. Tidak bisa login ke phpMyAdmin:
+   - Username: root
+   - Password: (kosong, jangan diisi)
+   - Jika masih error, cek konfigurasi MySQL di Laragon
+
+3. Database tidak muncul:
+   - Pastikan database sudah dibuat
+   - Cek nama database di file .env (DB_DATABASE=laravel)
+   - Jika belum ada, buat database baru di phpMyAdmin
+
+===============================================
+

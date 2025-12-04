@@ -1,0 +1,67 @@
+═══════════════════════════════════════════════════════════════
+  CARA MEMPERBAIKI ERROR: "cannot contain whitespace"
+═══════════════════════════════════════════════════════════════
+
+Error ini terjadi karena ada SPASI atau karakter whitespace di URI.
+
+CARA MEMPERBAIKI:
+───────────────────────────────────────────────────────────────
+
+1. HAPUS URI yang ada (klik ikon trash/delete)
+
+2. TAMBAHKAN LAGI dengan COPY-PASTE dari sini:
+
+   Untuk "Authorized JavaScript origins":
+   http://127.0.0.1:8000
+
+   Untuk "Authorized redirect URIs":
+   http://127.0.0.1:8000/google/callback
+
+3. PASTIKAN:
+   ✅ Copy-paste langsung (jangan ketik manual)
+   ✅ Tidak ada spasi di awal/akhir
+   ✅ Tidak ada karakter tersembunyi
+   ✅ Format persis seperti di atas
+
+4. Klik "SAVE"
+
+5. Tunggu 1-2 menit
+
+6. Coba login lagi
+
+═══════════════════════════════════════════════════════════════
+  LANGKAH DETAIL:
+═══════════════════════════════════════════════════════════════
+
+LANGKAH 1: HAPUS URI YANG ADA
+───────────────────────────────────────────────────────────────
+1. Di bagian "Authorized JavaScript origins"
+   - Klik ikon trash/delete di sebelah URI yang error
+   - Hapus URI yang ada
+
+2. Di bagian "Authorized redirect URIs"
+   - Klik ikon trash/delete di sebelah URI yang error
+   - Hapus URI yang ada
+
+LANGKAH 2: TAMBAHKAN URI YANG BENAR
+───────────────────────────────────────────────────────────────
+1. Di bagian "Authorized JavaScript origins":
+   - Klik "+ Add URI"
+   - COPY-PASTE ini (dari sini, jangan ketik manual):
+     http://127.0.0.1:8000
+   - Pastikan tidak ada spasi
+
+2. Di bagian "Authorized redirect URIs":
+   - Klik "+ Add URI"
+   - COPY-PASTE ini (dari sini, jangan ketik manual):
+     http://127.0.0.1:8000/google/callback
+   - Pastikan tidak ada spasi
+
+LANGKAH 3: SIMPAN
+───────────────────────────────────────────────────────────────
+1. Klik "SAVE" di bagian bawah
+2. Tunggu 1-2 menit
+3. Coba login lagi
+
+═══════════════════════════════════════════════════════════════
+

@@ -1,0 +1,66 @@
+═══════════════════════════════════════════════════════════════
+  CARA MEMPERBAIKI ERROR: redirect_uri_mismatch
+═══════════════════════════════════════════════════════════════
+
+Error ini terjadi karena redirect URI belum didaftarkan di Google Cloud Console.
+
+LANGKAH MEMPERBAIKI:
+───────────────────────────────────────────────────────────────
+
+1. Buka Google Cloud Console:
+   https://console.cloud.google.com/
+
+2. Pastikan project "My Project 19557" sudah dipilih
+
+3. Buka: APIs & Services > Credentials
+   (atau langsung ke: https://console.cloud.google.com/apis/credentials?project=river-inquiry-480123-n9)
+
+4. Di daftar "OAuth 2.0 Client IDs", cari client yang sudah dibuat
+   (Nama: "Jasa Fotografi Web Client" atau nama lainnya)
+
+5. Klik pada nama client tersebut (bukan ikon edit, tapi klik nama)
+
+6. Di halaman detail client, scroll ke bagian "Authorized redirect URIs"
+
+7. Klik tombol "ADD URI" atau "+ ADD URI"
+
+8. Masukkan URI berikut (copy-paste):
+   http://127.0.0.1:8000/google/callback
+
+9. Klik "SAVE" di bagian bawah halaman
+
+10. Tunggu beberapa detik untuk perubahan tersimpan
+
+11. Coba login lagi di aplikasi
+
+═══════════════════════════════════════════════════════════════
+  ALTERNATIF: JIKA TIDAK ADA TOMBOL ADD URI
+═══════════════════════════════════════════════════════════════
+
+Jika tidak ada tombol "ADD URI", ikuti langkah ini:
+
+1. Di halaman detail OAuth Client, klik ikon "Edit" (pensil) di bagian atas
+
+2. Scroll ke bagian "Authorized redirect URIs"
+
+3. Klik "ADD URI"
+
+4. Masukkan: http://127.0.0.1:8000/google/callback
+
+5. Klik "SAVE"
+
+═══════════════════════════════════════════════════════════════
+  VERIFIKASI
+═══════════════════════════════════════════════════════════════
+
+Setelah menambahkan redirect URI, pastikan:
+
+✅ URI yang ditambahkan: http://127.0.0.1:8000/google/callback
+✅ Tidak ada spasi di awal/akhir URI
+✅ Sudah klik SAVE
+✅ Sudah tunggu beberapa detik
+
+Setelah itu, coba login lagi!
+
+═══════════════════════════════════════════════════════════════
+

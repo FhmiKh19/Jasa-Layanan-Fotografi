@@ -1,0 +1,70 @@
+═══════════════════════════════════════════════════════════════
+  CARA MEMPERBAIKI ERROR: redirect_uri_mismatch
+═══════════════════════════════════════════════════════════════
+
+Error ini terjadi karena redirect URI di aplikasi tidak sesuai dengan
+yang didaftarkan di Google Cloud Console.
+
+LANGKAH MEMPERBAIKI:
+───────────────────────────────────────────────────────────────
+
+1. Buka Google Cloud Console:
+   https://console.cloud.google.com/
+
+2. Pastikan project "My Project 19557" sudah dipilih
+
+3. Buka: APIs & Services > Credentials
+   (atau: https://console.cloud.google.com/apis/credentials?project=river-inquiry-480123-n9)
+
+4. Di daftar "OAuth 2.0 Client IDs", klik pada nama client yang sudah dibuat
+   (Nama: "Jasa Fotografi Web Client" atau nama lainnya)
+
+5. Di halaman detail client, scroll ke bagian "Authorized redirect URIs"
+
+6. PASTIKAN ada URI berikut (copy-paste persis seperti ini):
+   http://127.0.0.1:8000/google/callback
+
+7. Jika belum ada, klik "ADD URI" atau "+ ADD URI" dan masukkan:
+   http://127.0.0.1:8000/google/callback
+
+8. PASTIKAN:
+   ✅ Menggunakan http:// (bukan https://)
+   ✅ Menggunakan 127.0.0.1 (bukan localhost)
+   ✅ Port 8000
+   ✅ Path: /google/callback (dengan slash di depan)
+   ✅ TIDAK ada spasi di awal/akhir
+   ✅ TIDAK ada trailing slash di akhir
+
+9. Klik "SAVE" di bagian bawah halaman
+
+10. Tunggu 1-2 menit agar perubahan tersimpan
+
+11. Clear cache browser (Ctrl + Shift + Delete) atau gunakan Incognito mode
+
+12. Coba login lagi
+
+═══════════════════════════════════════════════════════════════
+  CONTOH URI YANG BENAR:
+═══════════════════════════════════════════════════════════════
+
+✅ BENAR:
+   http://127.0.0.1:8000/google/callback
+
+❌ SALAH:
+   http://localhost:8000/google/callback
+   https://127.0.0.1:8000/google/callback
+   http://127.0.0.1:8000/google/callback/
+   http://127.0.0.1:8000/ google/callback
+   http://127.0.0.1:8000/google/callback (ada spasi)
+
+═══════════════════════════════════════════════════════════════
+  VERIFIKASI DI APLIKASI:
+═══════════════════════════════════════════════════════════════
+
+URI yang digunakan aplikasi:
+   http://127.0.0.1:8000/google/callback
+
+Pastikan URI di Google Cloud Console PERSIS sama dengan di atas!
+
+═══════════════════════════════════════════════════════════════
+

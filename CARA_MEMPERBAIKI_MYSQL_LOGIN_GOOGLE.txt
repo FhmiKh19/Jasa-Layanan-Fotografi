@@ -1,0 +1,129 @@
+===============================================
+CARA MEMPERBAIKI ERROR DATABASE SAAT LOGIN GOOGLE
+===============================================
+
+ERROR YANG TERJADI:
+SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it
+(Connection: mysql, SQL: select * from `users` where `email` = ...)
+
+PENYEBAB:
+Saat login dengan Google, aplikasi perlu mengakses database MySQL untuk:
+1. Mencari user berdasarkan email
+2. Membuat user baru jika belum ada
+
+Tapi MySQL tidak bisa diakses karena service tidak berjalan.
+
+===============================================
+SOLUSI: PASTIKAN MYSQL BERJALAN DI LARAGON
+===============================================
+
+LANGKAH 1: BUKA LARAGON
+- Buka aplikasi Laragon di komputer Anda
+- Pastikan ikon Laragon muncul di system tray (taskbar)
+
+LANGKAH 2: START MYSQL
+Ada 2 cara:
+
+CARA A - Start All (Termudah):
+1. Klik kanan pada ikon Laragon di system tray
+2. Pilih "Start All"
+3. Tunggu hingga ikon MySQL berubah menjadi hijau
+
+CARA B - Start MySQL Saja:
+1. Klik kanan pada ikon Laragon di system tray
+2. Pilih "MySQL" > "Start"
+3. Atau buka Laragon dan klik tombol "Start" pada bagian MySQL
+
+LANGKAH 3: VERIFIKASI MYSQL BERJALAN
+1. Di Laragon, pastikan status MySQL menunjukkan "Running" (hijau)
+2. Atau buka terminal dan jalankan:
+   
+   php artisan tinker
+   
+   Kemudian ketik:
+   DB::connection()->getPdo();
+   
+   Jika muncul informasi koneksi, berarti berhasil!
+   Jika error, berarti MySQL belum berjalan atau konfigurasi salah.
+
+===============================================
+CEK KONFIGURASI DATABASE
+===============================================
+
+Pastikan file .env memiliki setting berikut:
+
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=laravel
+DB_USERNAME=root
+DB_PASSWORD=
+
+Catatan:
+- DB_DATABASE bisa berbeda, sesuaikan dengan nama database yang sudah dibuat
+- DB_PASSWORD biasanya kosong untuk Laragon
+
+===============================================
+BUAT DATABASE (JIKA BELUM ADA)
+===============================================
+
+Jika database belum ada, buat dulu:
+
+LANGKAH 1: Buka phpMyAdmin
+- Klik kanan ikon Laragon di system tray
+- Pilih "www" > "phpMyAdmin"
+- Atau buka browser: http://127.0.0.1/phpmyadmin
+
+LANGKAH 2: Buat Database
+1. Klik "New" di sidebar kiri
+2. Masukkan nama database (contoh: "laravel" atau "jasa_fotografi")
+3. Pilih "utf8mb4_unicode_ci" sebagai collation
+4. Klik "Create"
+
+LANGKAH 3: Update File .env
+- Edit file .env dan ubah:
+  DB_DATABASE=nama_database_yang_baru_dibuat
+
+LANGKAH 4: Jalankan Migration
+Di terminal, jalankan:
+  php artisan migrate
+
+Ini akan membuat semua tabel yang diperlukan (users, bookings, sessions, dll)
+
+===============================================
+TROUBLESHOOTING
+===============================================
+
+1. MySQL Tidak Bisa Start:
+   - Pastikan tidak ada aplikasi lain yang menggunakan port 3306
+   - Restart Laragon
+   - Restart komputer jika perlu
+
+2. Port 3306 Sudah Digunakan:
+   - Buka Laragon Settings
+   - Ganti port MySQL (misalnya ke 3307)
+   - Update DB_PORT di file .env
+
+3. Access Denied:
+   - Cek username dan password di .env
+   - Untuk Laragon, biasanya password kosong
+
+4. Database Tidak Ditemukan:
+   - Pastikan database sudah dibuat di phpMyAdmin
+   - Pastikan nama database di .env sesuai dengan yang dibuat
+
+===============================================
+SETELAH MYSQL BERJALAN
+===============================================
+
+1. Clear cache config:
+   php artisan config:clear
+
+2. Test koneksi:
+   php artisan tinker
+   DB::connection()->getPdo();
+
+3. Coba login dengan Google lagi
+
+===============================================
+

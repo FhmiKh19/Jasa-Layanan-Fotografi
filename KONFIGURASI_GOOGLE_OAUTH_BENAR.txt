@@ -1,0 +1,68 @@
+═══════════════════════════════════════════════════════════════
+  KONFIGURASI GOOGLE OAUTH YANG BENAR
+═══════════════════════════════════════════════════════════════
+
+Ada 2 bagian yang HARUS diisi di Google Cloud Console:
+
+1. AUTHORIZED JAVASCRIPT ORIGINS
+───────────────────────────────────────────────────────────────
+   Ini untuk JavaScript origins (TANPA path)
+
+   URI yang benar:
+   http://127.0.0.1:8000
+
+   ⚠️ PENTING:
+   - TIDAK boleh ada path (/google/callback)
+   - TIDAK boleh ada trailing slash (/)
+   - Hanya domain + port
+
+2. AUTHORIZED REDIRECT URIS
+───────────────────────────────────────────────────────────────
+   Ini untuk redirect URIs (DENGAN path)
+
+   URI yang benar:
+   http://127.0.0.1:8000/google/callback
+
+   ⚠️ PENTING:
+   - HARUS ada path /google/callback
+   - TIDAK boleh ada trailing slash di akhir
+   - Lengkap dengan path
+
+═══════════════════════════════════════════════════════════════
+  CARA MENGISI DI GOOGLE CLOUD CONSOLE:
+═══════════════════════════════════════════════════════════════
+
+1. Buka: APIs & Services > Credentials
+
+2. Klik nama OAuth Client yang sudah dibuat
+
+3. Klik ikon "Edit" (pensil)
+
+4. Di bagian "Authorized JavaScript origins":
+   - Klik "ADD URI"
+   - Masukkan: http://127.0.0.1:8000
+   - (TANPA path, TANPA trailing slash)
+
+5. Di bagian "Authorized redirect URIs":
+   - Klik "ADD URI"
+   - Masukkan: http://127.0.0.1:8000/google/callback
+   - (DENGAN path /google/callback)
+
+6. Klik "SAVE"
+
+7. Tunggu 1-2 menit
+
+8. Coba login lagi
+
+═══════════════════════════════════════════════════════════════
+  RINGKASAN:
+═══════════════════════════════════════════════════════════════
+
+✅ Authorized JavaScript origins:
+   http://127.0.0.1:8000
+
+✅ Authorized redirect URIs:
+   http://127.0.0.1:8000/google/callback
+
+═══════════════════════════════════════════════════════════════
+

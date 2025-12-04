@@ -1,0 +1,67 @@
+===============================================
+CARA MEMPERBAIKI ERROR DATABASE CONNECTION
+===============================================
+
+ERROR YANG TERJADI:
+SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it
+
+SOLUSI YANG SUDAH DILAKUKAN:
+✅ Session driver sudah diubah dari 'database' ke 'file'
+   - File: config/session.php
+   - Sekarang session akan disimpan di file, tidak perlu database
+
+JIKA INGIN MENGGUNAKAN DATABASE SESSIONS LAGI:
+
+1. PASTIKAN MYSQL BERJALAN DI LARAGON:
+   - Buka Laragon
+   - Klik "Start All" atau pastikan MySQL berjalan (ikon hijau)
+   - Jika tidak berjalan, klik tombol Start pada bagian MySQL
+
+2. CEK KONFIGURASI DATABASE DI FILE .env:
+   - Pastikan setting berikut sesuai dengan Laragon Anda:
+   
+   DB_CONNECTION=mysql
+   DB_HOST=127.0.0.1
+   DB_PORT=3306
+   DB_DATABASE=nama_database_anda
+   DB_USERNAME=root
+   DB_PASSWORD=
+   
+   (Laragon biasanya password kosong untuk root)
+
+3. UBAH SESSION DRIVER KEMBALI KE DATABASE:
+   - Edit file: config/session.php
+   - Ubah: 'driver' => env('SESSION_DRIVER', 'file'),
+   - Menjadi: 'driver' => env('SESSION_DRIVER', 'database'),
+   
+   Atau set di file .env:
+   SESSION_DRIVER=database
+
+4. PASTIKAN DATABASE DAN TABEL SUDAH DIBUAT:
+   - Jalankan migration: php artisan migrate
+   - Tabel 'sessions' akan dibuat otomatis dari migration
+
+5. CLEAR CACHE:
+   php artisan config:clear
+   php artisan cache:clear
+
+CATATAN:
+- Untuk saat ini, aplikasi akan menggunakan file sessions (tidak perlu database)
+- Jika aplikasi butuh database untuk fitur lain, pastikan MySQL berjalan
+- Untuk development, file sessions sudah cukup dan lebih cepat
+
+===============================================
+UNTUK MEMERIKSA KONEKSI DATABASE:
+===============================================
+
+Jalankan perintah ini di terminal:
+php artisan tinker
+
+Kemudian ketik:
+DB::connection()->getPdo();
+
+Jika berhasil, akan muncul informasi koneksi.
+Jika error, berarti MySQL belum berjalan atau konfigurasi salah.
+
+===============================================
+

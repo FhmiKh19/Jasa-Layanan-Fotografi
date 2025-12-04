@@ -1,0 +1,152 @@
+===============================================
+CARA MELIHAT DATABASE DI HEIDISQL
+===============================================
+
+HeidiSQL adalah aplikasi desktop untuk mengelola database MySQL.
+Lebih mudah dan cepat dibanding phpMyAdmin!
+
+===============================================
+LANGKAH-LANGKAH:
+===============================================
+
+LANGKAH 1: PILIH DATABASE "laravel"
+   - Di panel kiri (Database Navigation), cari database "laravel"
+   - Klik sekali pada database "laravel"
+   - Database akan terpilih dan ditampilkan di panel tengah
+
+LANGKAH 2: LIHAT DAFTAR TABEL
+   - Setelah memilih database "laravel", panel tengah akan menampilkan semua tabel
+   - Anda akan melihat tabel seperti:
+     * users
+     * bookings
+     * sessions
+     * password_reset_tokens
+     * migrations
+   - Setiap tabel menampilkan informasi:
+     - Name (nama tabel)
+     - Rows (jumlah baris data)
+     - Size (ukuran tabel)
+     - Created (tanggal dibuat)
+     - Updated (tanggal diupdate)
+
+LANGKAH 3: LIHAT DATA DI TABEL
+   CARA A - Double Click:
+   - Double click pada nama tabel (misalnya "users")
+   - Data akan muncul di tab baru di panel tengah
+
+   CARA B - Klik Kanan:
+   - Klik kanan pada nama tabel
+   - Pilih "Select top 1000 rows" atau "Select all rows"
+   - Data akan muncul di panel tengah
+
+LANGKAH 4: LIHAT DATA USER
+   - Double click tabel "users"
+   - Atau klik kanan tabel "users" > "Select top 1000 rows"
+   - Anda akan melihat semua kolom:
+     * id
+     * name (nama)
+     * telepon (nomor telepon)
+     * alamat
+     * email
+     * password (dalam bentuk hash/terenkripsi)
+     * created_at
+     * updated_at
+
+LANGKAH 5: LIHAT DATA BOOKING
+   - Double click tabel "bookings"
+   - Atau klik kanan tabel "bookings" > "Select top 1000 rows"
+   - Anda akan melihat semua kolom:
+     * id
+     * nama_pemesan
+     * jam_booking
+     * bukti_transfer
+     * created_at
+     * updated_at
+
+===============================================
+MENGGUNAKAN SQL QUERY (OPSIONAL):
+===============================================
+
+Di panel bawah ada SQL Query Editor, Anda bisa mengetik query SQL:
+
+1. LIHAT SEMUA USER:
+   SELECT * FROM users;
+
+2. LIHAT USER DENGAN NAMA TERTENTU:
+   SELECT * FROM users WHERE name = 'gayus';
+
+3. LIHAT USER BERDASARKAN TELEPON:
+   SELECT * FROM users WHERE telepon = '0895806078011';
+
+4. LIHAT SEMUA BOOKING:
+   SELECT * FROM bookings;
+
+5. HITUNG JUMLAH USER:
+   SELECT COUNT(*) as total_user FROM users;
+
+6. LIHAT USER YANG BARU DIBUAT:
+   SELECT * FROM users ORDER BY created_at DESC LIMIT 10;
+
+CARA JALANKAN QUERY:
+   - Ketik query di SQL Editor (panel bawah)
+   - Tekan F9 atau klik tombol "Execute" (ikon play/▶)
+   - Hasil akan muncul di panel tengah
+
+===============================================
+TIPS & TRICKS:
+===============================================
+
+1. FILTER DATABASE:
+   - Di panel kiri, ada kotak "Database filter"
+   - Ketik "laravel" untuk cepat menemukan database
+
+2. FILTER TABEL:
+   - Di panel kiri, ada kotak "Table filter"
+   - Ketik "user" untuk mencari tabel yang mengandung kata "user"
+
+3. REFRESH DATA:
+   - Klik tombol refresh (ikon circular arrow) di toolbar
+   - Atau tekan F5
+   - Untuk update data terbaru
+
+4. SORT DATA:
+   - Di tabel, klik header kolom untuk sort (A-Z atau Z-A)
+
+5. EDIT DATA LANGSUNG:
+   - Double click pada cell untuk edit data
+   - Tekan Enter untuk save
+   - ⚠️ HATI-HATI: Pastikan Anda tahu apa yang diubah!
+
+6. EXPORT DATA:
+   - Klik kanan tabel > "Export grid as..."
+   - Pilih format (CSV, SQL, HTML, dll)
+
+===============================================
+CATATAN PENTING:
+===============================================
+
+⚠️  Password user dienkripsi (hash)
+   - Password tidak bisa dilihat dalam bentuk asli
+   - Hanya bisa dilihat bentuk hash-nya
+
+⚠️  Nomor Telepon UNIQUE
+   - Tidak boleh ada 2 user dengan nomor telepon sama
+   - Jika coba buat user baru dengan telepon yang sudah ada, akan error
+
+⚠️  Pastikan Database Terpilih
+   - Pastikan database "laravel" sudah terpilih sebelum query
+   - Cek di toolbar atas, harus tertulis "Database: laravel"
+
+===============================================
+SHORTCUT KEYBOARD PENTING:
+===============================================
+
+F5          = Refresh
+F9          = Execute query
+Ctrl+T      = New query tab
+Ctrl+W      = Close tab
+Ctrl+F      = Find/Search
+Ctrl+G      = Find next
+
+===============================================
+
