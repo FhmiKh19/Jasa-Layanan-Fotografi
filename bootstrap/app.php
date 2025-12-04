@@ -11,7 +11,12 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //
+        
+        // Alias middleware custom
+        $middleware->alias([
+            'fotografer' => \App\Http\Middleware\FotograferMiddleware::class,
+        ]);
+
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
