@@ -9,7 +9,10 @@ use Carbon\Carbon;
 
 class TestimoniReportController extends Controller
 {
-    // Tampilkan laporan testimoni
+    /**
+     * Tampilkan laporan testimoni
+     * Support filter rating, tanggal, dan search
+     */
     public function index(Request $request)
     {
         $query = Testimoni::with('pengguna');

@@ -140,6 +140,48 @@
       </div>
     </div>
 
+    <!-- Assign Fotografer -->
+    <div class="card border-0 shadow-sm mb-4">
+      <div class="card-header bg-white">
+        <h5 class="fw-bold mb-0 d-flex align-items-center">
+          <i data-lucide="camera" class="me-2"></i>Fotografer
+        </h5>
+      </div>
+      <div class="card-body">
+        @if($pesanan->fotografer)
+          <div class="mb-3">
+            <strong>Fotografer Ter-assign:</strong><br>
+            <div class="mt-2 p-2 bg-light rounded">
+              <strong>{{ $pesanan->fotografer->nama_pengguna }}</strong><br>
+              <small class="text-muted">{{ $pesanan->fotografer->email }}</small>
+            </div>
+          </div>
+        @else
+          <div class="mb-3">
+            <span class="text-muted">Belum ada fotografer yang di-assign</span>
+          </div>
+        @endif
+        <form action="{{ route('admin.orders.assignFotografer', $pesanan->id_pesanan) }}" method="POST">
+          @csrf
+          @method('PUT')
+          <div class="mb-3">
+            <label class="form-label fw-bold">Pilih Fotografer</label>
+            <select name="id_fotografer" class="form-select">
+              <option value="">-- Pilih Fotografer --</option>
+              @foreach($fotografer as $foto)
+                <option value="{{ $foto->id_pengguna }}" {{ $pesanan->id_fotografer == $foto->id_pengguna ? 'selected' : '' }}>
+                  {{ $foto->nama_pengguna }} (@{{ $foto->username }})
+                </option>
+              @endforeach
+            </select>
+          </div>
+          <button type="submit" class="btn btn-primary w-100 d-inline-flex align-items-center justify-content-center">
+            <i data-lucide="save" class="me-2" style="width: 1em; height: 1em;"></i>{{ $pesanan->fotografer ? 'Ubah Fotografer' : 'Assign Fotografer' }}
+          </button>
+        </form>
+      </div>
+    </div>
+
     <!-- Ubah Status -->
     <div class="card border-0 shadow-sm">
       <div class="card-header bg-white">

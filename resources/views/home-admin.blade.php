@@ -30,25 +30,25 @@
   <div class="col-md-3">
     <div class="card card-stat p-3 text-center">
       <h6 class="text-muted">Pesanan Aktif</h6>
-      <h3 class="fw-bold text-primary">3</h3>
+      <h3 class="fw-bold text-primary">{{ $pesananAktif ?? 0 }}</h3>
     </div>
   </div>
   <div class="col-md-3">
     <div class="card card-stat p-3 text-center">
       <h6 class="text-muted">Pesanan Selesai</h6>
-      <h3 class="fw-bold text-success">8</h3>
+      <h3 class="fw-bold text-success">{{ $pesananSelesai ?? 0 }}</h3>
     </div>
   </div>
   <div class="col-md-3">
     <div class="card card-stat p-3 text-center">
       <h6 class="text-muted">Menunggu Pembayaran</h6>
-      <h3 class="fw-bold text-warning">1</h3>
+      <h3 class="fw-bold text-warning">{{ $menungguPembayaran ?? 0 }}</h3>
     </div>
   </div>
   <div class="col-md-3">
     <div class="card card-stat p-3 text-center">
       <h6 class="text-muted">Total Pengeluaran</h6>
-      <h3 class="fw-bold text-info">Rp 2.500.000</h3>
+      <h3 class="fw-bold text-info">Rp {{ number_format($totalPengeluaran ?? 0, 0, ',', '.') }}</h3>
     </div>
   </div>
 </div>
@@ -73,39 +73,35 @@
           </tr>
         </thead>
         <tbody>
+          @forelse($pesananTerbaru ?? [] as $index => $pesanan)
           <tr>
-            <td>1</td>
-            <td>Wedding Photography</td>
-            <td>20 Nov 2025</td>
-            <td><span class="badge bg-primary">Diproses</span></td>
+            <td>{{ $index + 1 }}</td>
+            <td>{{ $pesanan->layanan->nama_layanan ?? 'Layanan' }}</td>
+            <td>{{ $pesanan->tgl_acara ? \Carbon\Carbon::parse($pesanan->tgl_acara)->format('d M Y') : '-' }}</td>
+            <td>
+              @if($pesanan->status == 'selesai')
+                <span class="badge bg-success">Selesai</span>
+              @elseif($pesanan->status == 'diproses')
+                <span class="badge bg-primary">Diproses</span>
+              @elseif($pesanan->status == 'menunggu_pembayaran')
+                <span class="badge bg-warning text-dark">Menunggu Pembayaran</span>
+              @else
+                <span class="badge bg-secondary">Pending</span>
+              @endif
+            </td>
             <td>
               <button class="btn btn-sm btn-outline-primary">
                 <i data-lucide="eye" style="width: 0.9em; height: 0.9em;"></i> Detail
               </button>
             </td>
           </tr>
+          @empty
           <tr>
-            <td>2</td>
-            <td>Prewedding Package</td>
-            <td>15 Nov 2025</td>
-            <td><span class="badge bg-success">Selesai</span></td>
-            <td>
-              <button class="btn btn-sm btn-outline-primary">
-                <i data-lucide="eye" style="width: 0.9em; height: 0.9em;"></i> Detail
-              </button>
+            <td colspan="5" class="text-center py-4">
+              <p class="text-muted mb-0">Belum ada pesanan</p>
             </td>
           </tr>
-          <tr>
-            <td>3</td>
-            <td>Product Photography</td>
-            <td>10 Nov 2025</td>
-            <td><span class="badge bg-warning text-dark">Menunggu Pembayaran</span></td>
-            <td>
-              <button class="btn btn-sm btn-outline-primary">
-                <i data-lucide="eye" style="width: 0.9em; height: 0.9em;"></i> Detail
-              </button>
-            </td>
-          </tr>
+          @endforelse
         </tbody>
       </table>
     </div>
@@ -121,32 +117,23 @@
   </div>
   <div class="card-body">
     <div class="row g-3">
+      @forelse($layananPopuler ?? [] as $layanan)
       <div class="col-md-4">
         <div class="card border p-3 text-center">
-          <i data-lucide="heart" class="text-danger mb-3" style="width: 3rem; height: 3rem;"></i>
-          <h6 class="fw-bold">Wedding Photography</h6>
+          <i data-lucide="camera" class="text-primary mb-3" style="width: 3rem; height: 3rem;"></i>
+          <h6 class="fw-bold">{{ $layanan->nama_layanan }}</h6>
           <p class="text-muted small mb-2">Mulai dari</p>
-          <h5 class="text-primary">Rp 5.000.000</h5>
+          <h5 class="text-primary">Rp {{ number_format($layanan->harga, 0, ',', '.') }}</h5>
         </div>
       </div>
-      <div class="col-md-4">
-        <div class="card border p-3 text-center">
-          <i data-lucide="camera" class="text-warning mb-3" style="width: 3rem; height: 3rem;"></i>
-          <h6 class="fw-bold">Prewedding</h6>
-          <p class="text-muted small mb-2">Mulai dari</p>
-          <h5 class="text-primary">Rp 2.500.000</h5>
-        </div>
+      @empty
+      <div class="col-12">
+        <p class="text-muted text-center">Belum ada layanan tersedia</p>
       </div>
-      <div class="col-md-4">
-        <div class="card border p-3 text-center">
-          <i data-lucide="package" class="text-info mb-3" style="width: 3rem; height: 3rem;"></i>
-          <h6 class="fw-bold">Product Photography</h6>
-          <p class="text-muted small mb-2">Mulai dari</p>
-          <h5 class="text-primary">Rp 1.500.000</h5>
-        </div>
-      </div>
+      @endforelse
     </div>
   </div>
 </div>
 @endsection
+
 

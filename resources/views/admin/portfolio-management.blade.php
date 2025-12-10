@@ -99,6 +99,36 @@ use Illuminate\Support\Facades\Storage;
     position: relative;
   }
 
+  /* Header Styling untuk Kontras Lebih Baik */
+  .page-header-wrapper {
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    padding: 25px 30px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+
+  .page-header-wrapper h3 {
+    color: #2c3e50 !important;
+    font-size: 1.75rem !important;
+    font-weight: 700 !important;
+    margin-bottom: 8px !important;
+    text-shadow: none !important;
+  }
+
+  .page-header-wrapper h3 i {
+    color: #8d5524 !important;
+  }
+
+  .page-header-wrapper p {
+    color: #555 !important;
+    font-size: 1rem !important;
+    font-weight: 500 !important;
+    margin: 0 !important;
+  }
+
   .portfolio-card:hover {
     transform: translateY(-8px);
     box-shadow: 0 12px 30px rgba(0,0,0,0.15);
@@ -160,16 +190,18 @@ use Illuminate\Support\Facades\Storage;
 
 @section('content')
 <!-- Header -->
-<div class="d-flex justify-content-between align-items-center mb-4">
-  <div>
-    <h3 class="fw-bold mb-1 d-flex align-items-center">
-      <i data-lucide="image" class="me-2 text-primary"></i>Manajemen Portofolio
-    </h3>
-    <p class="text-muted mb-0">Kelola galeri portofolio fotografi</p>
+<div class="page-header-wrapper">
+  <div class="d-flex justify-content-between align-items-center">
+    <div>
+      <h3 class="fw-bold mb-1 d-flex align-items-center">
+        <i data-lucide="image" class="me-2 text-primary"></i>Manajemen Portofolio
+      </h3>
+      <p class="text-muted mb-0">Kelola galeri portofolio fotografi</p>
+    </div>
+    <a href="{{ route('admin.portfolio.create') }}" class="btn btn-primary d-inline-flex align-items-center">
+      <i data-lucide="plus" class="me-2" style="width: 1em; height: 1em;"></i>Tambah Portofolio
+    </a>
   </div>
-  <a href="{{ route('admin.portfolio.create') }}" class="btn btn-primary d-inline-flex align-items-center">
-    <i data-lucide="plus" class="me-2" style="width: 1em; height: 1em;"></i>Tambah Portofolio
-  </a>
 </div>
 
 <!-- Statistik Cards -->

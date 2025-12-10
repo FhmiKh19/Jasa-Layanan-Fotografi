@@ -9,7 +9,10 @@ use Illuminate\Support\Facades\Storage;
 
 class ServiceManagementController extends Controller
 {
-    // Tampilkan semua layanan
+    /**
+     * Tampilkan daftar semua layanan
+     * Support filter status dan search
+     */
     public function index(Request $request)
     {
         // Reset filter jika ada parameter clear
@@ -40,7 +43,7 @@ class ServiceManagementController extends Controller
         // Pastikan semua data ditampilkan, urutkan dari yang terbaru
         $layanan = $query->orderBy('tgl_dibuat', 'desc')
                         ->orderBy('id_layanan', 'desc')
-                        ->paginate(12);
+                        ->paginate(10);
 
         // Statistik
         $totalLayanan = Layanan::count();
@@ -63,13 +66,18 @@ class ServiceManagementController extends Controller
         return view('admin.service-management', compact('layanan', 'stats'));
     }
 
-    // Form create layanan
+    /**
+     * Tampilkan form tambah layanan baru
+     */
     public function create()
     {
         return view('admin.service-form');
     }
 
-    // Store layanan baru
+    /**
+     * Simpan layanan baru ke database
+     * Upload gambar jika ada
+     */
     public function store(Request $request)
     {
         $request->validate([
@@ -100,15 +108,21 @@ class ServiceManagementController extends Controller
         if ($request->hasFile('gambar')) {
             $gambar = $request->file('gambar');
             $gambarName = time() . '_' . uniqid() . '.' . $gambar->getClientOriginalExtension();
-            // Pastikan directory ada
-            Storage::makeDirectory('public/layanan');
-            $path = $gambar->storeAs('public/layanan', $gambarName);
             
-            // Debug: pastikan file tersimpan
-            if (Storage::exists('public/layanan/' . $gambarName)) {
+            // Pastikan directory ada
+            $layananPath = 'public/layanan';
+            if (!Storage::exists($layananPath)) {
+                Storage::makeDirectory($layananPath);
+            }
+            
+            // Simpan gambar
+            $path = $gambar->storeAs($layananPath, $gambarName);
+            
+            // Pastikan file tersimpan dan simpan nama file ke database
+            if (Storage::exists($path)) {
                 $data['gambar'] = $gambarName;
             } else {
-                \Log::error('Gambar gagal disimpan: ' . $gambarName);
+                \Log::error('Gambar gagal disimpan: ' . $gambarName . ' | Path: ' . $path);
             }
         }
 
@@ -119,14 +133,19 @@ class ServiceManagementController extends Controller
             ->with('success', 'Layanan "' . $layanan->nama_layanan . '" berhasil ditambahkan.');
     }
 
-    // Form edit layanan
+    /**
+     * Tampilkan form edit layanan
+     */
     public function edit($id)
     {
         $layanan = Layanan::findOrFail($id);
         return view('admin.service-form', compact('layanan'));
     }
 
-    // Update layanan
+    /**
+     * Update data layanan
+     * Jika upload gambar baru, gambar lama akan dihapus
+     */
     public function update(Request $request, $id)
     {
         $request->validate([
@@ -163,10 +182,22 @@ class ServiceManagementController extends Controller
 
             $gambar = $request->file('gambar');
             $gambarName = time() . '_' . uniqid() . '.' . $gambar->getClientOriginalExtension();
+            
             // Pastikan directory ada
-            Storage::makeDirectory('public/layanan');
-            $gambar->storeAs('public/layanan', $gambarName);
-            $data['gambar'] = $gambarName;
+            $layananPath = 'public/layanan';
+            if (!Storage::exists($layananPath)) {
+                Storage::makeDirectory($layananPath);
+            }
+            
+            // Simpan gambar
+            $path = $gambar->storeAs($layananPath, $gambarName);
+            
+            // Pastikan file tersimpan
+            if (Storage::exists($path)) {
+                $data['gambar'] = $gambarName;
+            } else {
+                \Log::error('Gambar gagal disimpan saat update: ' . $gambarName . ' | Path: ' . $path);
+            }
         }
 
         $layanan->update($data);
@@ -175,7 +206,9 @@ class ServiceManagementController extends Controller
             ->with('success', 'Layanan berhasil diperbarui.');
     }
 
-    // Toggle status layanan
+    /**
+     * Toggle status layanan (aktif ↔ nonaktif)
+     */
     public function toggleStatus($id)
     {
         $layanan = Layanan::findOrFail($id);
@@ -188,7 +221,10 @@ class ServiceManagementController extends Controller
         return back()->with('success', "Layanan '{$layanan->nama_layanan}' berhasil {$statusLabel}.");
     }
 
-    // Hapus layanan
+    /**
+     * Hapus layanan dari database
+     * Tidak bisa hapus jika layanan sudah pernah dipesan
+     */
     public function destroy($id)
     {
         $layanan = Layanan::findOrFail($id);

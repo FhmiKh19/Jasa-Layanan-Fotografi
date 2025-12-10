@@ -5,6 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+// Import User model untuk relationship
+use App\Models\User;
+
 class Pesanan extends Model
 {
     use HasFactory;
@@ -15,6 +18,7 @@ class Pesanan extends Model
     protected $fillable = [
         'id_pengguna',
         'id_layanan',
+        'id_fotografer',
         'metode_pembayaran',
         'bukti_pembayaran',
         'tgl_pesanan',
@@ -38,5 +42,11 @@ class Pesanan extends Model
     public function layanan()
     {
         return $this->belongsTo(Layanan::class, 'id_layanan');
+    }
+
+    // 🔥 RELATIONSHIP: Pesanan belongs to Fotografer
+    public function fotografer()
+    {
+        return $this->belongsTo(User::class, 'id_fotografer');
     }
 }

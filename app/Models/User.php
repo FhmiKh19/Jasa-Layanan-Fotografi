@@ -47,7 +47,6 @@ class User extends Authenticatable
     {
         return [
             'email_verified_at' => 'datetime',
-            'password' => 'hashed',
             'tgl_dibuat' => 'datetime', 
         ];
     }
@@ -81,5 +80,17 @@ class User extends Authenticatable
     public function isAktif()
     {
         return $this->status_akun === 'aktif';
+    }
+
+    // Accessor for name (alias for nama_pengguna)
+    public function getNameAttribute()
+    {
+        return $this->nama_pengguna;
+    }
+
+    // Accessor for id (alias for id_pengguna)
+    public function getIdAttribute()
+    {
+        return $this->id_pengguna;
     }
 }

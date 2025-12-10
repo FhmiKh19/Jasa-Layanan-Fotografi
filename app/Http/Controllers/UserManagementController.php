@@ -9,7 +9,10 @@ use App\Models\User;
 
 class UserManagementController extends Controller
 {
-    // Tampilkan user aktif (admin, fotografer dan pelanggan)
+    /**
+     * Tampilkan daftar semua user aktif
+     * Support filter role dan search
+     */
     public function index(Request $request)
     {
         $query = User::whereIn('role', ['admin', 'fotografer', 'pelanggan'])
@@ -43,14 +46,19 @@ class UserManagementController extends Controller
         return view('admin.user-management', compact('users', 'stats'));
     }
 
-    // Form edit user
+    /**
+     * Tampilkan form edit user
+     */
     public function edit($id)
     {
         $user = User::findOrFail($id);
         return view('admin.edit-user', compact('user'));
     }
 
-    // Update user
+    /**
+     * Update data user
+     * Password opsional (jika diisi akan di-update)
+     */
     public function update(Request $request, $id)
     {
         $user = User::findOrFail($id);
@@ -86,13 +94,18 @@ class UserManagementController extends Controller
             ->with('success', 'Data user ' . $user->nama_pengguna . ' berhasil diperbarui.');
     }
 
-    // Form tambah user (admin, fotografer, pelanggan)
+    /**
+     * Tampilkan form tambah user baru
+     */
     public function create()
     {
         return view('admin.create-user');
     }
 
-    // Store user baru (admin, fotografer, pelanggan)
+    /**
+     * Simpan user baru ke database
+     * Password di-hash, status otomatis aktif
+     */
     public function store(Request $request)
     {
         $request->validate([
@@ -126,7 +139,10 @@ class UserManagementController extends Controller
             ->with('success', 'Akun ' . $roleLabel . ' ' . $request->nama_pengguna . ' berhasil ditambahkan.');
     }
 
-    // Delete user
+    /**
+     * Hapus user dari database
+     * Tidak bisa hapus akun sendiri
+     */
     public function destroy($id)
     {
         $user = User::findOrFail($id);

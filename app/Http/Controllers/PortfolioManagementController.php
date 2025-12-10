@@ -9,7 +9,10 @@ use Illuminate\Support\Facades\Storage;
 
 class PortfolioManagementController extends Controller
 {
-    // Tampilkan semua portofolio
+    /**
+     * Tampilkan daftar semua portofolio
+     * Support filter kategori dan search
+     */
     public function index(Request $request)
     {
         $query = Portofolio::query();
@@ -29,7 +32,7 @@ class PortfolioManagementController extends Controller
             });
         }
 
-        $portofolio = $query->orderBy('tgl_dibuat', 'desc')->paginate(12);
+        $portofolio = $query->orderBy('tgl_dibuat', 'desc')->paginate(10);
 
         // Statistik
         $stats = [
@@ -56,13 +59,18 @@ class PortfolioManagementController extends Controller
         return view('admin.portfolio-management', compact('portofolio', 'stats', 'kategoris'));
     }
 
-    // Form create portofolio
+    /**
+     * Tampilkan form tambah portofolio baru
+     */
     public function create()
     {
         return view('admin.portfolio-form');
     }
 
-    // Store portofolio baru
+    /**
+     * Simpan portofolio baru ke database
+     * Upload gambar jika ada
+     */
     public function store(Request $request)
     {
         $request->validate([
@@ -81,6 +89,7 @@ class PortfolioManagementController extends Controller
 
         // Upload gambar jika ada
         if ($request->hasFile('gambar')) {
+            try {
             // Pastikan directory ada
             Storage::makeDirectory('public/portfolio');
             
@@ -93,9 +102,28 @@ class PortfolioManagementController extends Controller
             // Pastikan file tersimpan
             if (Storage::disk('public')->exists('portfolio/' . $gambarName)) {
                 $data['gambar'] = $gambarName;
-                \Log::info('Portfolio image saved', ['filename' => $gambarName, 'path' => $path]);
+                    \Log::info('Admin Portfolio image saved', [
+                        'filename' => $gambarName, 
+                        'path' => $path,
+                        'full_path' => storage_path('app/public/portfolio/' . $gambarName)
+                    ]);
             } else {
-                \Log::error('Portfolio image failed to save', ['filename' => $gambarName]);
+                    \Log::error('Admin Portfolio image failed to save', [
+                        'filename' => $gambarName,
+                        'path' => $path
+                    ]);
+                    return redirect()->back()
+                        ->withInput()
+                        ->with('error', 'Gagal menyimpan gambar. Silakan coba lagi.');
+                }
+            } catch (\Exception $e) {
+                \Log::error('Admin Portfolio upload error', [
+                    'error' => $e->getMessage(),
+                    'trace' => $e->getTraceAsString()
+                ]);
+                return redirect()->back()
+                    ->withInput()
+                    ->with('error', 'Terjadi kesalahan saat upload gambar: ' . $e->getMessage());
             }
         }
 
@@ -105,14 +133,19 @@ class PortfolioManagementController extends Controller
             ->with('success', 'Portofolio berhasil ditambahkan.');
     }
 
-    // Form edit portofolio
+    /**
+     * Tampilkan form edit portofolio
+     */
     public function edit($id)
     {
         $portofolio = Portofolio::findOrFail($id);
         return view('admin.portfolio-form', compact('portofolio'));
     }
 
-    // Update portofolio
+    /**
+     * Update data portofolio
+     * Jika upload gambar baru, gambar lama akan dihapus
+     */
     public function update(Request $request, $id)
     {
         $request->validate([
@@ -132,6 +165,7 @@ class PortfolioManagementController extends Controller
 
         // Upload gambar baru jika ada
         if ($request->hasFile('gambar')) {
+            try {
             // Hapus gambar lama jika ada
             if ($portofolio->gambar && Storage::disk('public')->exists('portfolio/' . $portofolio->gambar)) {
                 Storage::disk('public')->delete('portfolio/' . $portofolio->gambar);
@@ -149,6 +183,25 @@ class PortfolioManagementController extends Controller
             // Pastikan file tersimpan
             if (Storage::disk('public')->exists('portfolio/' . $gambarName)) {
                 $data['gambar'] = $gambarName;
+                    \Log::info('Admin Portfolio image updated', [
+                        'filename' => $gambarName, 
+                        'path' => $path
+                    ]);
+                } else {
+                    \Log::error('Admin Portfolio image update failed', [
+                        'filename' => $gambarName
+                    ]);
+                    return redirect()->back()
+                        ->withInput()
+                        ->with('error', 'Gagal menyimpan gambar. Silakan coba lagi.');
+                }
+            } catch (\Exception $e) {
+                \Log::error('Admin Portfolio update upload error', [
+                    'error' => $e->getMessage()
+                ]);
+                return redirect()->back()
+                    ->withInput()
+                    ->with('error', 'Terjadi kesalahan saat upload gambar: ' . $e->getMessage());
             }
         }
 
@@ -158,7 +211,10 @@ class PortfolioManagementController extends Controller
             ->with('success', 'Portofolio berhasil diperbarui.');
     }
 
-    // Hapus portofolio
+    /**
+     * Hapus portofolio dari database
+     * Hapus gambar dari storage juga
+     */
     public function destroy($id)
     {
         $portofolio = Portofolio::findOrFail($id);

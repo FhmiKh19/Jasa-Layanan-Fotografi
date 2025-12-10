@@ -14,6 +14,13 @@ class ProfileController extends Controller
     public function show()
     {
         $user = Auth::user();
+        
+        // Jika user adalah pelanggan, gunakan view khusus pelanggan
+        if ($user->role === 'pelanggan') {
+            return view('pelanggan.profile', compact('user'));
+        }
+        
+        // Untuk admin dan fotografer, gunakan view default
         return view('profile', compact('user'));
     }
 

@@ -148,12 +148,17 @@
             <label class="form-label fw-bold">Gambar Layanan</label>
             
             <!-- Preview gambar saat ini -->
-            @if(isset($layanan) && isset($layanan->gambar) && $layanan->gambar)
+            @if(isset($layanan) && isset($layanan->gambar) && !empty($layanan->gambar))
               <div class="mb-3">
-                <img src="{{ asset('storage/layanan/' . $layanan->gambar) }}" 
+                @php
+                  $gambarPath = 'storage/layanan/' . $layanan->gambar;
+                  $gambarUrl = asset($gambarPath);
+                @endphp
+                <img src="{{ $gambarUrl }}" 
                      alt="Preview" 
                      class="image-preview show"
-                     id="currentImage">
+                     id="currentImage"
+                     onerror="console.error('Gambar tidak ditemukan: {{ $gambarPath }}'); this.style.display='none';">
               </div>
             @endif
 

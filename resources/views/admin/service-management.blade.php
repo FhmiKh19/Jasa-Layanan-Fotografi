@@ -103,21 +103,53 @@ use Illuminate\Support\Facades\Storage;
     border-color: #667eea;
     transform: scale(1.05);
   }
+
+  /* Header Styling untuk Kontras Lebih Baik */
+  .page-header-wrapper {
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    padding: 25px 30px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+
+  .page-header-wrapper h3 {
+    color: #2c3e50 !important;
+    font-size: 1.75rem !important;
+    font-weight: 700 !important;
+    margin-bottom: 8px !important;
+    text-shadow: none !important;
+  }
+
+  .page-header-wrapper h3 i {
+    color: #8d5524 !important;
+  }
+
+  .page-header-wrapper p {
+    color: #555 !important;
+    font-size: 1rem !important;
+    font-weight: 500 !important;
+    margin: 0 !important;
+  }
 </style>
 @endpush
 
 @section('content')
 <!-- Header -->
-<div class="d-flex justify-content-between align-items-center mb-4">
-  <div>
-    <h3 class="fw-bold mb-1 d-flex align-items-center">
-      <i data-lucide="package" class="me-2 text-primary"></i>Manajemen Layanan
-    </h3>
-    <p class="text-muted mb-0">Kelola layanan fotografi yang tersedia</p>
+<div class="page-header-wrapper">
+  <div class="d-flex justify-content-between align-items-center">
+    <div>
+      <h3 class="fw-bold mb-1 d-flex align-items-center">
+        <i data-lucide="package" class="me-2 text-primary"></i>Manajemen Layanan
+      </h3>
+      <p class="text-muted mb-0">Kelola layanan fotografi yang tersedia</p>
+    </div>
+    <a href="{{ route('admin.services.create') }}" class="btn btn-primary d-inline-flex align-items-center">
+      <i data-lucide="plus" class="me-2" style="width: 1em; height: 1em;"></i>Tambah Layanan
+    </a>
   </div>
-  <a href="{{ route('admin.services.create') }}" class="btn btn-primary d-inline-flex align-items-center">
-    <i data-lucide="plus" class="me-2" style="width: 1em; height: 1em;"></i>Tambah Layanan
-  </a>
 </div>
 
 <!-- Statistik Cards -->
@@ -240,12 +272,19 @@ use Illuminate\Support\Facades\Storage;
           @forelse($layanan as $item)
             <tr>
                 <td>
-                  @if($item->gambar)
-                    <img src="{{ asset('storage/layanan/' . $item->gambar) }}" 
+                  @if($item->gambar && !empty($item->gambar))
+                    @php
+                      // Gunakan route name untuk memastikan route dipanggil
+                      $gambarUrl = route('storage.layanan', ['filename' => $item->gambar]);
+                    @endphp
+                    <img src="{{ $gambarUrl }}" 
                          alt="{{ $item->nama_layanan ?? 'Layanan' }}" 
                          class="user-avatar"
-                         style="width: 60px; height: 60px; object-fit: cover; border-radius: 8px;"
-                         onerror="console.error('Gambar tidak ditemukan: storage/layanan/{{ $item->gambar }}'); this.onerror=null; this.parentElement.innerHTML='<div class=\'user-avatar bg-light d-flex align-items-center justify-content-center\' style=\'width: 60px; height: 60px; border-radius: 8px;\'><i data-lucide=\'image\' class=\'text-muted\' style=\'width: 1.5rem; height: 1.5rem;\'></i></div>'; lucide.createIcons();">
+                         style="width: 60px; height: 60px; object-fit: cover; border-radius: 8px; cursor: pointer; border: 1px solid #e0e0e0; background: #f5f5f5;"
+                         onclick="window.open('{{ $gambarUrl }}', '_blank')"
+                         title="Klik untuk melihat gambar besar"
+                         loading="lazy"
+                         onerror="console.error('Gambar tidak ditemukan: {{ $item->gambar }} | URL: {{ $gambarUrl }}'); this.onerror=null; this.style.display='none'; this.parentElement.innerHTML='<div class=\'user-avatar bg-light d-flex align-items-center justify-content-center\' style=\'width: 60px; height: 60px; border-radius: 8px; border: 1px solid #e0e0e0;\' title=\'Gambar: {{ $item->gambar }}\'><i data-lucide=\'image\' class=\'text-muted\' style=\'width: 1.5rem; height: 1.5rem;\'></i></div>'; if(typeof lucide !== 'undefined') lucide.createIcons();">
                   @else
                     <div class="user-avatar bg-light d-flex align-items-center justify-content-center" style="width: 60px; height: 60px; border-radius: 8px;">
                       <i data-lucide="image" class="text-muted" style="width: 1.5rem; height: 1.5rem;"></i>

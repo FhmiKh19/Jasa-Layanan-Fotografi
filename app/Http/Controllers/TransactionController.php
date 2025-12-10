@@ -9,7 +9,10 @@ use Carbon\Carbon;
 
 class TransactionController extends Controller
 {
-    // Tampilkan semua transaksi selesai
+    /**
+     * Tampilkan daftar transaksi yang sudah selesai
+     * Support filter metode pembayaran, tanggal, dan search
+     */
     public function index(Request $request)
     {
         // Query hanya transaksi dengan status 'selesai'
@@ -64,7 +67,7 @@ class TransactionController extends Controller
             });
         }
 
-        $transactions = $query->orderBy('updated_at', 'desc')->paginate(15);
+        $transactions = $query->orderBy('updated_at', 'desc')->paginate(10);
 
         // Statistik transaksi
         $totalTransaksi = Pesanan::where('status', 'selesai')->count();
@@ -127,7 +130,9 @@ class TransactionController extends Controller
         return view('admin.transactions', compact('transactions', 'stats', 'metodePembayaran'));
     }
 
-    // Detail transaksi
+    /**
+     * Tampilkan detail transaksi lengkap
+     */
     public function show($id)
     {
         $transaction = Pesanan::with(['pengguna', 'layanan'])

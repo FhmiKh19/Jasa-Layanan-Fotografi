@@ -10,14 +10,39 @@
   @stack('styles')
   <style>
     body {
-      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
       font-family: 'Poppins', sans-serif;
       overflow-x: hidden;
+      position: relative;
+      min-height: 100vh;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=1920&h=1080&fit=crop') center/cover no-repeat;
+      filter: brightness(0.5);
+      z-index: 0;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(139, 69, 19, 0.7) 0%, rgba(101, 67, 33, 0.7) 50%, rgba(62, 39, 35, 0.7) 100%);
+      z-index: 1;
     }
 
     /* === Sidebar === */
     .sidebar {
-      background: linear-gradient(180deg, #1e3c72 0%, #2a5298 100%);
+      background: rgba(139, 69, 19, 0.95);
+      backdrop-filter: blur(10px);
       min-height: 100vh;
       color: #fff;
       transition: all 0.3s ease;
@@ -27,9 +52,10 @@
       top: 0;
       z-index: 1000;
       overflow-y: auto;
-      box-shadow: 2px 0 20px rgba(0,0,0,0.1);
+      box-shadow: 2px 0 20px rgba(0,0,0,0.3);
       display: flex;
       flex-direction: column;
+      border-right: 1px solid rgba(255,255,255,0.1);
     }
     .sidebar::-webkit-scrollbar {
       width: 6px;
@@ -104,17 +130,20 @@
       min-height: 100vh;
       width: calc(100% - 280px);
       background: transparent;
+      position: relative;
+      z-index: 2;
     }
 
     /* === Navbar === */
     .navbar {
-      background: #fff;
-      box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 2px 20px rgba(0,0,0,0.1);
       position: sticky;
       top: 0;
-      z-index: 10;
+      z-index: 100;
       padding: 1rem 2rem;
-      border-bottom: 1px solid rgba(0,0,0,0.05);
+      border-bottom: 1px solid rgba(255,255,255,0.2);
     }
     .navbar-brand {
       font-size: 1.25rem;
@@ -126,8 +155,9 @@
     .card-stat {
       border: none;
       border-radius: 16px;
-      background-color: #FFFFFF;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
       transform: translateY(20px);
       opacity: 0;
       transition: all 0.6s ease;
@@ -145,8 +175,9 @@
     .stat-card {
       border: none;
       border-radius: 20px;
-      background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
-      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
       transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
       position: relative;
       overflow: hidden;
@@ -208,7 +239,9 @@
     .card {
       border-radius: 20px;
       border: none;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
       overflow: hidden;
     }
     .card-header {

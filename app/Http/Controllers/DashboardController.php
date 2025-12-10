@@ -11,6 +11,10 @@ use Carbon\Carbon;
 
 class DashboardController extends Controller
 {
+    /**
+     * Tampilkan dashboard admin
+     * Menampilkan statistik user, pesanan, pendapatan, dan grafik
+     */
     public function index()
     {
         // Statistik User - hitung semua user berdasarkan role
@@ -46,7 +50,7 @@ class DashboardController extends Controller
         // Pesanan terbaru
         $pesananTerbaru = Pesanan::with(['pengguna', 'layanan'])
             ->orderBy('tgl_pesanan', 'desc')
-            ->limit(5)
+            ->limit(10)
             ->get();
 
         // Grafik pesanan per bulan (6 bulan terakhir)

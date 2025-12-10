@@ -105,18 +105,49 @@
     border-radius: 20px;
     overflow: hidden;
   }
+
+  /* Header Styling untuk Kontras Lebih Baik */
+  .page-header-wrapper {
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    padding: 25px 30px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+
+  .page-header-wrapper h3 {
+    color: #2c3e50 !important;
+    font-size: 1.75rem !important;
+    font-weight: 700 !important;
+    margin-bottom: 8px !important;
+    text-shadow: none !important;
+  }
+
+  .page-header-wrapper h3 i {
+    color: #8d5524 !important;
+  }
+
+  .page-header-wrapper p {
+    color: #555 !important;
+    font-size: 1rem !important;
+    font-weight: 500 !important;
+    margin: 0 !important;
+  }
 </style>
 @endpush
 
 @section('content')
 <!-- Header -->
-<div class="d-flex justify-content-between align-items-center mb-4">
-  <div>
-    <h3 class="fw-bold mb-1 d-flex align-items-center">
-      <i data-lucide="users" class="me-2 text-primary"></i>Manajemen User
-    </h3>
-    <p class="text-muted mb-0">Kelola akun admin, fotografer dan pelanggan</p>
-  </div>
+<div class="page-header-wrapper">
+  <div class="d-flex justify-content-between align-items-center">
+    <div>
+      <h3 class="fw-bold mb-1 d-flex align-items-center">
+        <i data-lucide="users" class="me-2 text-primary"></i>Manajemen User
+      </h3>
+      <p class="text-muted mb-0">Kelola akun admin, fotografer dan pelanggan</p>
+    </div>
   <div class="d-flex gap-2">
     <a href="{{ route('admin.users.create') }}" class="btn btn-primary d-inline-flex align-items-center">
       <i data-lucide="user-plus" class="me-2" style="width: 1em; height: 1em;"></i>Tambah User
